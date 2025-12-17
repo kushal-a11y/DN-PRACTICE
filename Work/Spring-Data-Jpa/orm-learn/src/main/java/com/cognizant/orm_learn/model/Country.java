@@ -12,10 +12,10 @@ import lombok.Data;
 public class Country {
     @Id
     @Column(name="co_code")
-    private String co_code;
+    private String code;
 
     @Column(name="co_name")
-    private String co_name;
+    private String name;
 
     //Getters, Setters and to_String are auto generated
 }
