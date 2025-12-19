@@ -42,7 +42,8 @@ public class OrmLearnApplication implements CommandLineRunner{
 		// // }
 		// testAddCountry();
 		// testUpdateCountry();
-		findStockwithpriceGreaterThan(1250*1d);
+		// getStocksByPriceGreaterThan("GOOGL", new BigDecimal(1250));
+		getlowestXPricedStock(3);
 	}
 	private void testAddCountry(){
 		Country country = new Country();
@@ -68,23 +69,52 @@ public class OrmLearnApplication implements CommandLineRunner{
 			System.out.println(country.getCode() + " : " + country.getName());
 		}
 	}
-	private void stockOfCompanyByDate(){
-		List<Stock> records = stockRepository.findByDateBetweenAndCodeContaining(LocalDate.parse("2019-09-01"),LocalDate.parse("2019-09-30"),"FB");
-		if(records.isEmpty()) System.out.println("No records found");
-		else{
-			for(Stock stock : records){
-				System.out.println(stock.getCode() + ", " + stock.getDate() + ", " + stock.getOpen() + ", "+stock.getClose() + ", "+stock.getVolume());
-			}
+	private void findStocksBymonthAndYearAndCompany(){
+		List<Stock> records = stockRepository.findByDateBetweenAndCode(LocalDate.of(2019, 8, 31), LocalDate.of(2019, 9, 30), "FB");
+		for(Stock record : records){
+			System.out.println(record.getId() + ", " 
+			+record.getCode() + ", "
+			+record.getDate() + ", " 
+			+record.getOpen() + ", "
+			+record.getClose() + ", "
+			+record.getVolume() + ". ");
 		}
 	}
+	public void getStocksByPriceGreaterThan(String code, BigDecimal price){
+		List<Stock> stocks = stockRepository.findByCodeAndCloseGreaterThan(code, price);
+		for(Stock record : stocks){
+			System.out.println(record.getId() + ", " 
+			+record.getCode() + ", "
+			+record.getDate() + ", " 
+			+record.getOpen() + ", "
+			+record.getClose() + ", "
+			+record.getVolume() + ". ");
+		}
+	}
+	public void getTopXVolumedStock(int x){
+		List<Stock> stocks = stockRepository.findAllByOrderByVolumeDesc();
 
-	private void findStockwithpriceGreaterThan(double price){
-		List<Stock> stocks = stockRepository.findStockByPriceGreaterThan(new BigDecimal(price));
-		if(stocks.isEmpty()) System.out.println("No records found");
-		else{
-			for(Stock stock : stocks){
-				System.out.println(stock.getCode() + ", " + stock.getDate() + ", " + stock.getOpen() + ", "+stock.getClose() + ", "+stock.getVolume());
-			}
+		for(int i = 0; i < x; i++){
+			Stock record = stocks.get(i);
+			System.out.println(record.getId() + ", " 
+			+record.getCode() + ", "
+			+record.getDate() + ", " 
+			+record.getOpen() + ", "
+			+record.getClose() + ", "
+			+record.getVolume() + ". ");
+		}
+	}
+	public void getlowestXPricedStock(int x){
+		List<Stock> stocks = stockRepository.findAllByOrderByCloseAsc();
+
+		for(int i = 0; i < x; i++){
+			Stock record = stocks.get(i);
+			System.out.println(record.getId() + ", " 
+			+record.getCode() + ", "
+			+record.getDate() + ", " 
+			+record.getOpen() + ", "
+			+record.getClose() + ", "
+			+record.getVolume() + ". ");
 		}
 	}
 }

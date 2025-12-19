@@ -35,9 +35,5 @@ public class Stock {
     @Column(name="st_volume")
     private BigDecimal volume;
 
-    @Transient
-    public BigDecimal getStockPrice(){
-        return this.close.subtract(this.open);
-    }
 
 }

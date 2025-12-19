@@ -12,12 +12,10 @@ import java.time.LocalDate;
 
 
 public interface StockRepository extends JpaRepository<Stock, Integer>{
-    List<Stock> findByDateBetweenAndCodeContaining(LocalDate startDate, LocalDate endDate, String text);  
-    @Query(
-        """
-            SELECT s FROM Stock s 
-            where (s.close) >= :price
-        """
-    )
-    List<Stock> findStockByPriceGreaterThan(@Param("price") BigDecimal price);
+    List<Stock> findByDateBetweenAndCode(LocalDate startdate, LocalDate enddate, String text);
+    List<Stock> findByCodeAndCloseGreaterThan(String code,BigDecimal price);
+    // @Query("SELECT s FROM Stock s order by s.volume desc")
+    List<Stock> findAllByOrderByVolumeDesc();
+    // @Query("SELECT s FROM Stock s order by s.close")
+    List<Stock> findAllByOrderByCloseAsc();
 }
