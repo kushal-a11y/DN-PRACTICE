@@ -5,7 +5,7 @@ create table country( co_code varchar(2) primary key, co_name varchar(50));
 CREATE TABLE department (
     dp_id INT AUTO_INCREMENT PRIMARY KEY,
     dp_name VARCHAR(45) NOT NULL
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE skill (
     sk_id INT AUTO_INCREMENT PRIMARY KEY,
