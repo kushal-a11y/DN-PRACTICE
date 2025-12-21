@@ -49,7 +49,7 @@ public class Employee {
     private Department department;
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name="employee_skill",
         joinColumns = @JoinColumn(name="es_em_id"),

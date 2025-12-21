@@ -28,7 +28,7 @@ public class Department {
    @Column(name="dp_name")
    private String name;
 
-   @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "department")
    @ToString.Exclude
    private Set<Employee> employees = new HashSet<>();
 }

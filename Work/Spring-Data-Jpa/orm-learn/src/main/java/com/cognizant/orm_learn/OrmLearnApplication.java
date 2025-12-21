@@ -22,6 +22,9 @@ import com.cognizant.orm_learn.service.DepartmentService;
 import com.cognizant.orm_learn.service.EmployeeService;
 import com.cognizant.orm_learn.service.SkillService;
 
+import jakarta.transaction.TransactionScoped;
+import jakarta.transaction.Transactional;
+
 // import java.math.BigDecimal;
 // import java.time.LocalDate;
 // import java.util.List;
@@ -49,18 +52,31 @@ public class OrmLearnApplication{
 		departmentService = context.getBean(DepartmentService.class);
 		skillService = context.getBean(SkillService.class);
 		employeeService = context.getBean(EmployeeService.class);
-		testAddSkillToEmployee(1);
+		testGetAllPermanentEmployees();
 	}
+	public static void testGetAllPermanentEmployees() {
 
-	private static void testAddSkillToEmployee(int id){
-		Employee employee = employeeService.get(id);
-		Skill newSkill = skillService.get(4);
-		Set<Skill> skills = employee.getSkills();
-		skills.add(newSkill);
-		employee.setSkills(skills);
-		employeeService.save(employee);
-		LOGGER.debug("employee skills:{}", employee.getSkills());
-	}
+        LOGGER.info("Start");
+
+        List<Skill> skills = employeeService.getSkillsOfPermanentEmployees();
+
+        LOGGER.debug("Permanent Employees' skills are :{}", skills);
+
+        // employees.forEach(e -> LOGGER.debug("Skills:{}", e.getSkills()));
+
+        LOGGER.info("End");
+
+    }
+
+	// private static void testAddSkillToEmployee(int id){
+	// 	Employee employee = employeeService.get(id);
+	// 	Skill newSkill = skillService.get(4);
+	// 	Set<Skill> skills = employee.getSkills();
+	// 	skills.add(newSkill);
+	// 	employee.setSkills(skills);
+	// 	employeeService.save(employee);
+	// 	LOGGER.debug("employee skills:{}", employee.getSkills());
+	// }
 
 	// private static void getemployeeSkills(Employee employee){
 	// 	LOGGER.debug("Employee skills: {}",employee.getSkills());
