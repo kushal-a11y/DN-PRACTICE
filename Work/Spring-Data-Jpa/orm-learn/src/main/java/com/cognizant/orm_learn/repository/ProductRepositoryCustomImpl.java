@@ -23,15 +23,16 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     @Override
     public List<Product> searchProducts(Map<String, Object> filters){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-        Root<Product> product = cq.from(Product.class);  
+        CriteriaQuery<Product> cq  = cb.createQuery(Product.class);
+        Root<Product> product = cq.from(Product.class);
+
         List<Predicate> predicates = new ArrayList<>();
 
         if(filters.containsKey("ram")){
-            predicates.add(cb.equal(product.get("ram"), filters.get("ram")));
+           predicates.add(cb.equal(product.get("ram"), filters.get("ram")));//adding condition1
         }
         if(filters.containsKey("hdd")){
-            predicates.add(cb.greaterThanOrEqualTo(product.get("hdd"), (Integer)filters.get("hdd")));
+            predicates.add(cb.greaterThanOrEqualTo(product.get("hdd"), (Integer)filters.get("hdd")));//adding condition2
         }
         if(filters.containsKey("cpu")){
             predicates.add(cb.equal(product.get("cpu"), filters.get("cpu")));
