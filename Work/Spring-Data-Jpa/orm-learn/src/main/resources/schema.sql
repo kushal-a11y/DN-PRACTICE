@@ -45,3 +45,65 @@ CREATE TABLE employee_skill (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+-- CREATE TABLE user(
+--     us_id int PRIMARY KEY,
+--     us_name VARCHAR(45),
+--     us_email VARCHAR(45)
+-- );
+
+-- CREATE TABLE attempt(
+--     at_id int PRIMARY KEY,
+--     at_date DATE,
+--     at_us_id 
+-- );
+-- ===============================
+-- INSERT STATEMENTS FOR ALL TABLES
+-- ===============================
+
+-- -------------------------------
+-- DEPARTMENT TABLE
+-- -------------------------------
+INSERT INTO department (dp_id, dp_name) VALUES (1, 'Engineering');
+INSERT INTO department (dp_id, dp_name) VALUES (2, 'Human Resources');
+INSERT INTO department (dp_id, dp_name) VALUES (3, 'Finance');
+
+-- -------------------------------
+-- EMPLOYEE TABLE
+-- em_dp_id → FK to department.dp_id
+-- -------------------------------
+INSERT INTO employee (em_id, em_name, em_salary, em_permanent, em_date_of_birth, em_dp_id)
+VALUES (101, 'Amit Sharma', 75000.00, true, '1998-04-15', 1);
+
+INSERT INTO employee (em_id, em_name, em_salary, em_permanent, em_date_of_birth, em_dp_id)
+VALUES (102, 'Neha Verma', 68000.00, false, '1999-08-21', 1);
+
+INSERT INTO employee (em_id, em_name, em_salary, em_permanent, em_date_of_birth, em_dp_id)
+VALUES (103, 'Rahul Das', 62000.00, true, '1997-01-10', 2);
+
+INSERT INTO employee (em_id, em_name, em_salary, em_permanent, em_date_of_birth, em_dp_id)
+VALUES (104, 'Sneha Roy', 70000.00, true, '1996-11-05', 3);
+
+-- -------------------------------
+-- SKILL TABLE
+-- -------------------------------
+INSERT INTO skill (sk_id, sk_name) VALUES (201, 'Java');
+INSERT INTO skill (sk_id, sk_name) VALUES (202, 'Spring Boot');
+INSERT INTO skill (sk_id, sk_name) VALUES (203, 'Hibernate');
+INSERT INTO skill (sk_id, sk_name) VALUES (204, 'SQL');
+
+-- -------------------------------
+-- EMPLOYEE_SKILL JOIN TABLE
+-- es_em_id → employee.em_id
+-- es_sk_id → skill.sk_id
+-- -------------------------------
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (101, 201);
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (101, 202);
+
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (102, 201);
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (102, 204);
+
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (103, 203);
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (104, 201);
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (104, 202);
+INSERT INTO employee_skill (es_em_id, es_sk_id) VALUES (104, 203);

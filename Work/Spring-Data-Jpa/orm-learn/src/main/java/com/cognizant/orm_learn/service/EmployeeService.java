@@ -34,4 +34,10 @@ public class EmployeeService {
     public void save(Employee employee){
         employeeRepository.save(employee);
     }
+    public double findAvgSalaryOfDept(int id){
+        return employeeRepository.findAvgSalaryOfDept(id);
+    }
+    public List<Employee> findAllEmployeesNatively(){
+        return employeeRepository.getAllEmployeesNatively();
+    }
 }

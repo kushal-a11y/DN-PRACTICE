@@ -1,6 +1,8 @@
 package com.cognizant.orm_learn;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -14,14 +16,19 @@ import org.springframework.context.ApplicationContext;
 // import com.cognizant.orm_learn.model.Country;
 import com.cognizant.orm_learn.model.Department;
 import com.cognizant.orm_learn.model.Employee;
+import com.cognizant.orm_learn.model.Product;
 import com.cognizant.orm_learn.model.Skill;
+import com.cognizant.orm_learn.repository.ProductRepository;
 // import com.cognizant.orm_learn.model.Stock;
 import com.cognizant.orm_learn.repository.StockRepository;
 import com.cognizant.orm_learn.service.CountryService;
 import com.cognizant.orm_learn.service.DepartmentService;
 import com.cognizant.orm_learn.service.EmployeeService;
+import com.cognizant.orm_learn.service.ProductService;
 import com.cognizant.orm_learn.service.SkillService;
 
+
+import ch.qos.logback.core.model.conditional.ElseModel;
 import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 
@@ -44,6 +51,8 @@ public class OrmLearnApplication{
 	private static SkillService skillService;
 
 	private static EmployeeService employeeService;
+
+	private static ProductService productService; 
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrmLearnApplication.class);
 	
@@ -52,21 +61,47 @@ public class OrmLearnApplication{
 		departmentService = context.getBean(DepartmentService.class);
 		skillService = context.getBean(SkillService.class);
 		employeeService = context.getBean(EmployeeService.class);
-		testGetAllPermanentEmployees();
+		productService = context.getBean(ProductService.class);
+		searchProducts();
 	}
-	public static void testGetAllPermanentEmployees() {
 
-        LOGGER.info("Start");
+	public static void searchProducts(){
+		LOGGER.info("start");
 
-        List<Skill> skills = employeeService.getSkillsOfPermanentEmployees();
+		Map<String, Object> filters = new HashMap<>();
+		filters.put("ram", 16);
+		filters.put("cpu", 5);
+		filters.put("rating", 4.0);
 
-        LOGGER.debug("Permanent Employees' skills are :{}", skills);
+		List<Product> products = productService.searchProducts(filters);
 
-        // employees.forEach(e -> LOGGER.debug("Skills:{}", e.getSkills()));
+		products.forEach((p) -> LOGGER.debug("Product: {}", p));
 
-        LOGGER.info("End");
+		LOGGER.info("End");
 
-    }
+	}
+
+	// public static void testGetAllEmp(){
+	// 	List<Employee> employees = employeeService.findAllEmployeesNatively();
+	// 	employees.forEach((e) -> LOGGER.debug("Employee : {}", e));
+	// }
+	// public static void testAvgSalPerDept(){
+	// 	System.out.println(employeeService.findAvgSalaryOfDept(1));
+	// }
+
+	// public static void testGetAllPermanentEmployees() {
+
+    //     LOGGER.info("Start");
+
+    //     List<Skill> skills = employeeService.getSkillsOfPermanentEmployees();
+
+    //     LOGGER.debug("Permanent Employees' skills are :{}", skills);
+
+    //     // employees.forEach(e -> LOGGER.debug("Skills:{}", e.getSkills()));
+
+    //     LOGGER.info("End");
+
+    // }
 
 	// private static void testAddSkillToEmployee(int id){
 	// 	Employee employee = employeeService.get(id);
